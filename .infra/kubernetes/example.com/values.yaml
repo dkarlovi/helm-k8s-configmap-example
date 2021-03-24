@@ -1,0 +1,14 @@
+app:
+    debug: 0
+    env: prod
+    jwt:
+        secret: ThisSecretIsNotSetChangeIt
+    opcache:
+        stat: 0
+    url:
+        scheme: https
+    xdebug:
+        enable: 0
+mercure:
+    publish:
+        url: 'http://hub/.well-known/mercure'

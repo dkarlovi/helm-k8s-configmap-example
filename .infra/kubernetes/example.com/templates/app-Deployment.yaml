@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    labels:
+        app: '{{ template "fullname" . }}'
+        chart: '{{ .Chart.Name }}-{{ .Chart.Version }}'
+        heritage: '{{ .Release.Service }}'
+        release: '{{ .Release.Name }}'
+    name: '{{ template "name" . }}-app'
+spec:
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                app: '{{ template "name" . }}-app'
+                release: '{{ .Release.Name }}'
+        spec:
+            containers:
+                -
+                    envFrom:
+                        - { configMapRef: { name: '{{ template "name" . }}-app' } }
+                    image: dkarlovi/env-test
+                    imagePullPolicy: IfNotPresent
+                    name: '{{ .Chart.Name }}-app'
+                    ports:
+                        - { containerPort: 9000 }
+            restartPolicy: Always
+    selector:
+        matchLabels:
+            app: '{{ template "name" . }}-app'
+            release: '{{ .Release.Name }}'
+

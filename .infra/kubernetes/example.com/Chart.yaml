@@ -1,0 +1,8 @@
+apiVersion: v2
+name: example.com
+version: 0.1.0
+icon: http://example.com/favicon.ico
+keywords:
+    - example
+    - example.com
+appVersion: 0.1.0
