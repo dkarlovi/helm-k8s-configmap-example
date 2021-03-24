@@ -20,7 +20,10 @@ spec:
                 -
                     envFrom:
                         - { configMapRef: { name: '{{ template "name" . }}-app' } }
-                    image: dkarlovi/env-test
+                    image: alpine:latest
+                    command:
+                        - sleep
+                        - "36000"
                     imagePullPolicy: IfNotPresent
                     name: '{{ .Chart.Name }}-app'
                     ports:
