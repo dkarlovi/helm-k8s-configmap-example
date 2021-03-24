@@ -20,6 +20,37 @@ Uninstall:
 helm uninstall --namespace helm-test example.com
 ```
 
+## Check diff of the upgrade
+
+1. install Helm `diff` plugin  
+    ```
+    helm plugin install https://github.com/databus23/helm-diff
+    ```
+2. can now set `diff` in front of the command to see what happens:  
+   ```shell
+   helm diff upgrade --install --namespace helm-test --values .infra/kubernetes/example.com/environments/dev.yaml example.com .infra/kubernetes/example.com/
+   ```
+3. diff shows up:   
+    ```patch
+    helm-test, examplecom-app, ConfigMap (v1) has changed:
+    # Source: examplecom/templates/app-ConfigMap.yaml
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+    labels:
+    app: 'examplecom-example.com'
+    chart: 'examplecom-0.1.0'
+    heritage: 'Helm'
+    release: 'example.com'
+    name: 'examplecom-app'
+    data:
+    APP_DEBUG: '0'
+    APP_ENV: 'prod'
+    APP_OPCACHE_STAT: '0'
+    -     APP_URL_BASE: 'staging.example.com'
+    +     APP_URL_BASE: 'dev.example.com'
+    ```
+
 ## Check the values in the `ConfigMap`
 
 View as a list:
